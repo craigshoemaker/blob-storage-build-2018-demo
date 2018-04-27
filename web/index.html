@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="Microsoft Azure Storage">
+
+  <title>Azure Storage Build Demo 2018</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="style/bootstrap.min.css" rel="stylesheet">
+  <link href="style/album.css" rel="stylesheet">
+
+</head>
+
+<body>
+  <header>
+
+    <div class="collapse width bg-dark col-md-2 h-100" id="navbarHeader">
+      <div class="d-flex justify-content-between">
+        <h3 class="text-white mt-4">Menu</h3>
+        <button type="button" class="close" aria-label="Close" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader"
+          aria-expanded="false">
+          <span aria-hidden="true" class="text-white h3">&times;</span>
+        </button>
+      </div>
+      <div class="h-100">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item bg-dark h5">
+            <a href="#images" class="text-white" data-toggle="tab" role="tab" onClick="listBlobs('images');">
+              <svg class="svg-icon" stroke="currentColor" viewBox="0 0 20 20">
+                <path d="M18.555,15.354V4.592c0-0.248-0.202-0.451-0.45-0.451H1.888c-0.248,0-0.451,0.203-0.451,0.451v10.808c0,0.559,0.751,0.451,0.451,0.451h16.217h0.005C18.793,15.851,18.478,14.814,18.555,15.354 M2.8,14.949l4.944-6.464l4.144,5.419c0.003,0.003,0.003,0.003,0.003,0.005l0.797,1.04H2.8z M13.822,14.949l-1.006-1.317l1.689-2.218l2.688,3.535H13.822z M17.654,14.064l-2.791-3.666c-0.181-0.237-0.535-0.237-0.716,0l-1.899,2.493l-4.146-5.42c-0.18-0.237-0.536-0.237-0.716,0l-5.047,6.598V5.042h15.316V14.064z M12.474,6.393c-0.869,0-1.577,0.707-1.577,1.576s0.708,1.576,1.577,1.576s1.577-0.707,1.577-1.576S13.343,6.393,12.474,6.393 M12.474,8.645c-0.371,0-0.676-0.304-0.676-0.676s0.305-0.676,0.676-0.676c0.372,0,0.676,0.304,0.676,0.676S12.846,8.645,12.474,8.645"></path>
+              </svg>
+              <strong>Images</strong>
+            </a>
+          </li>
+          <li class="list-group-item bg-dark h5">
+            <a href="#videos" class="text-white" data-toggle="tab" role="tab" onClick="listBlobs('videos');">
+              <svg class="svg-icon" stroke="currentColor" viewBox="0 0 20 20">
+                <path d="M18.175,4.142H1.951C1.703,4.142,1.5,4.344,1.5,4.592v10.816c0,0.247,0.203,0.45,0.451,0.45h16.224c0.247,0,0.45-0.203,0.45-0.45V4.592C18.625,4.344,18.422,4.142,18.175,4.142 M4.655,14.957H2.401v-1.803h2.253V14.957zM4.655,12.254H2.401v-1.803h2.253V12.254z M4.655,9.549H2.401V7.747h2.253V9.549z M4.655,6.846H2.401V5.043h2.253V6.846zM14.569,14.957H5.556V5.043h9.013V14.957z M17.724,14.957h-2.253v-1.803h2.253V14.957z M17.724,12.254h-2.253v-1.803h2.253V12.254zM17.724,9.549h-2.253V7.747h2.253V9.549z M17.724,6.846h-2.253V5.043h2.253V6.846z"></path>
+              </svg>
+              <strong>Videos</strong>
+            </a>
+          </li>
+          <li class="list-group-item bg-dark h5">
+            <a href="#search" class="text-white" data-toggle="tab" role="tab">
+              <svg class="svg-icon" stroke="currentColor" viewBox="0 0 20 20">
+                <path d="M18.125,15.804l-4.038-4.037c0.675-1.079,1.012-2.308,1.01-3.534C15.089,4.62,12.199,1.75,8.584,1.75C4.815,1.75,1.982,4.726,2,8.286c0.021,3.577,2.908,6.549,6.578,6.549c1.241,0,2.417-0.347,3.44-0.985l4.032,4.026c0.167,0.166,0.43,0.166,0.596,0l1.479-1.478C18.292,16.234,18.292,15.968,18.125,15.804 M8.578,13.99c-3.198,0-5.716-2.593-5.733-5.71c-0.017-3.084,2.438-5.686,5.74-5.686c3.197,0,5.625,2.493,5.64,5.624C14.242,11.548,11.621,13.99,8.578,13.99 M16.349,16.981l-3.637-3.635c0.131-0.11,0.721-0.695,0.876-0.884l3.642,3.639L16.349,16.981z"></path>
+              </svg>
+              <strong>Search</strong>
+            </a>
+          </li>
+          <li class="list-group-item bg-dark h5">
+            <a href="#login" class="text-white" id="login">
+              <svg fill="#fff" viewBox="0 0 22 22" height="22" width="22" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+                <path d="M0 0h24v24H0z" fill="none"/>
+              </svg>
+              <strong> Login</strong>
+              </svg>
+            </a>
+          </li>
+          <li class="list-group-item bg-dark h5">
+            <a href="#logout" class="text-white" id="logout">
+              <svg fill="#fff" height="22" viewBox="0 0 22 22" width="22" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0 0h24v24H0z" fill="none"/>
+                <path d="M10.09 15.59L11.5 17l5-5-5-5-1.41 1.41L12.67 11H3v2h9.67l-2.58 2.59zM19 3H5c-1.11 0-2 .9-2 2v4h2V5h14v14H5v-4H3v4c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/>
+              </svg>
+              <strong> Logout</strong>
+              </svg>
+            </a>
+          </li>
+        </ul>
+        <footer class="text-white" style="position:fixed; bottom: 0;">Azure Sample Media Gallery</footer>
+      </div>
+    </div>
+
+    <div class="navbar navbar-dark bg-dark box-shadow container-fluid">
+      <div class="container d-flex justify-content-between">
+        <label class="btn btn-default btn-primary">
+          <span id="uploadResult">Upload a new file</span>
+          <input type="file" id="uploadFile" hidden>
+        </label>
+        <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader"
+          aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="album py-5 bg-light">
+      <div class="container tab-content">
+
+        <div id="images" class="row tab-pane active" role="tabpanel">
+        </div>
+
+        <div id="videos" class="row tab-pane" role="tabpanel">
+        </div>
+
+        <div id="search" class="row tab-pane" role="tabpanel">
+          <div id="searchBox" class="col-md-12"></div>
+          <div id="results" class="col-md-12"></div>
+          <div id="pager" class="col-md-12"></div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="viewMedia" tabindex="-1" role="dialog" aria-labelledby="View Media" aria-hidden="true">
+          <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body" id="media">
+                <img class="img-responsive" src="" width="100%" />
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <footer class="text-muted">
+    <div class="container">
+      <p class="float-right">
+        <a href="#">Back to top</a>
+      </p>
+      <p>Azure Storage!</p>
+    </div>
+  </footer>
+
+  <!-- Bootstrap core JavaScript-->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="scripts/bootstrap.min.js"></script>
+  <script src="scripts/holder.min.js"></script>
+  
+	<script src="https://secure.aadcdn.microsoftonline-p.com/lib/1.0.17/js/adal.min.js"></script>
+
+  <!--initialize Azure Storage JS SDK -->
+  <script src="scripts/azure-storage.blob.min.js"></script>
+  <script type="text/javascript">
+
+  </script>
+
+  <!--Azure Search -->
+  <script src="https://cdn.jsdelivr.net/react/15.5.0/react.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/react/15.5.0/react-dom.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/redux/3.6.0/redux.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/azsearch.js@0.0.21/dist/AzSearch.bundle.js"></script>
+
+  <!--Application JS-->
+  <script src="scripts/app.js" async></script>
+</body>
+
+</html>
