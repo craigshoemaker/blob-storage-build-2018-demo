@@ -1,4 +1,4 @@
-window.viewModel = {};
+window.viewModel = {}
 
 $(function(){
 
@@ -95,7 +95,7 @@ $(function(){
   
   const getImageThumbnailURI = blobName => config.blobUri + config.container + '/' + blobName
 
-  $uploadResult = $('#uploadResult');
+  $uploadResult = $('#uploadResult')
   $blobItemTemplate = $('#blobItemTemplate')
 
   $('#uploadFile').on('change', () => {
@@ -105,7 +105,7 @@ $(function(){
     const file = $('#uploadFile').prop('files')[0]
     console.log(file)
 
-    const prefix = getBlobPrefix(file.name);
+    const prefix = getBlobPrefix(file.name)
 
     if(isFileFormatSupported(prefix)){
 
