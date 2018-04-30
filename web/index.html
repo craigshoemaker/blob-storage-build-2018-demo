@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="Microsoft Azure Storage">
+  <link rel="icon" href="favicon.ico" type="image/x-icon"/>
 
   <title>Azure Storage Build Demo 2018</title>
 
@@ -139,9 +140,44 @@
     </div>
   </footer>
 
+  <script id="blobItemTemplate" type="text/x-handlebars-template">
+    <div class="col-md-4">
+      <div class="card mb-4 box-shadow">
+        <img class="card-img-top placeholder" alt="{{metadata}}" src="{{thumbUri}}" onerror="this.src='style/no-image.jpg'">
+        <div class="card-body">
+          <p class="card-text">{{metadata}}</p>
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="btn-group">
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#viewMedia" data-src="{{fullUri}}">View</button>
+              <button type="button" class="btn btn-sm btn-outline-secondary" onClick="viewModel.deleteBlob('{{blobName}}', '{{prefix}}');">Delete</button>
+            </div>
+            <i>{{duration}}</i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </script>
+
+  <script id="resultTemplate" type="text/x-handlebars-template">
+    <div class="card mb-4 box-shadow">
+      <img class="card-img-top placeholder" alt="{{caption}}" src="thumbnails/{{metadata_storage_name}}.jpg" >
+      <div class="card-body">
+        <p class="card-text">{{caption}}</p>
+        <div class="d-flex justify-content-between align-items-center">
+          <div class="btn-group">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#viewMedia" data-src="transcoded/{{metadata_storage_name}}">View</button>
+            <button type="button" class="btn btn-sm btn-outline-secondary" onClick="deleteBlob('{{metadata_storage_name}}', 'videos');">Delete</button>
+          </div>
+          <i>{{duration}}</i>
+        </div>
+      </div>
+    </div>
+  </script>
+
   <!-- Bootstrap core JavaScript-->
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
     crossorigin="anonymous"></script>
+  <script src="scripts/handlebars.min-latest.js"></script>
   <script src="scripts/bootstrap.min.js"></script>
   <script src="scripts/holder.min.js"></script>
   
@@ -149,14 +185,11 @@
 
   <!--initialize Azure Storage JS SDK -->
   <script src="scripts/azure-storage.blob.min.js"></script>
-  <script type="text/javascript">
-
-  </script>
 
   <!--Azure Search -->
   <script src="https://cdn.jsdelivr.net/react/15.5.0/react.min.js"></script>
   <script src="https://cdn.jsdelivr.net/react/15.5.0/react-dom.min.js"></script>
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/redux/3.6.0/redux.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/redux/3.6.0/redux.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/azsearch.js@0.0.21/dist/AzSearch.bundle.js"></script>
 
   <!--Application JS-->
